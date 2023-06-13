@@ -6,11 +6,13 @@ import { deleteContact } from 'redux/contactsSlice';
 export function ContactsList() {
   
 const filter = useSelector(state => state.filter);
-const contacts = useSelector(state => state.contacts);
+const contacts = useSelector(state => state.contacts.data);
 
   const dispatch = useDispatch();
 
   const normalizedFilter = filter.toLowerCase();
+  // const transformedContacts = Object.values(contacts).slice(0, -1);
+  // console.log(transformedContacts);
   const visibleContacts = contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
 
 
