@@ -1,14 +1,24 @@
 import { useState } from 'react';
 import css from './NameForm.module.css'
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/actions';
+import { nanoid } from '@reduxjs/toolkit';
 
-export default function NameForm ({onAddContact}) {
+
+export default function NameForm() {
+    
+    const dispatch = useDispatch();
 
     const [name, setName] = useState('');
     const [number, setNumber] = useState('');
 
 
     const handleOnClick = () => {
-        onAddContact(name, number);
+        dispatch(addContact({
+            id: nanoid(),
+            name,
+            number,
+        }));
         setName('');
         setNumber('');
     };

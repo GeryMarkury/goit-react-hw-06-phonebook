@@ -1,21 +1,27 @@
 import { addContact, deleteContact, setFilter } from "./actions";
 import { createReducer } from "@reduxjs/toolkit";
 
-const contactsInitialState = [];
+const contactsInitialState = [
+    {
+        id: 0,
+        name: "Gery",
+        number: "11-111-11",
+    }
+];
 
 export const contactsReducer = createReducer(contactsInitialState, {
-    [addContact]: (state, action) => {
+    [addContact]: (state, {payload}) => {
         const contactExists = state.find(
-            contact => contact.name.toLowerCase() === name.toLowerCase()
+            contact => contact.name.toLowerCase() === payload.name.toLowerCase()
         );
         if (contactExists) {
-            alert(`${name} is already in contacts.`);
+            alert(`${payload.name} is already in contacts.`);
             return;
         }
-        state.push(action.payload);
+        state.push(payload);
     },
-    [deleteContact]: (state, action) => {
-        const index = state.findIndex(contact => contact.id === action.payload);
+    [deleteContact]: (state, {payload}) => {
+        const index = state.findIndex(contact => contact.id === payload);
         state.splice(index, 1);
     },
 });
@@ -23,7 +29,7 @@ export const contactsReducer = createReducer(contactsInitialState, {
 const filterInitialState = "";
 
 export const filterReducer = createReducer(filterInitialState, {
-    [setFilter]: (state, action) => {
-        state.filter = action.payload;
+    [setFilter]: (state, {payload}) => {
+        return payload;
     },
 });
