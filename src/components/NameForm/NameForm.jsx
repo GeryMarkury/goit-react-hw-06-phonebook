@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import css from './NameForm.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 import { nanoid } from '@reduxjs/toolkit';
 
 
 export default function NameForm() {
-    
+    const contacts = useSelector(state => state.contacts.data);
+
     const dispatch = useDispatch();
 
     const [name, setName] = useState('');
@@ -14,6 +15,13 @@ export default function NameForm() {
 
 
     const handleOnClick = () => {
+          const contactExists = contacts.find(
+            contact => contact.name.toLowerCase() === name.toLowerCase()
+        );
+        if (contactExists) {
+            alert(`${name} is already in contacts.`);
+            return;
+        }
         dispatch(addContact({
             id: nanoid(),
             name,
